@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\JMSSerializer;
+namespace Detail\Normalization\JMSSerializer;
 
 use JMS\Serializer\GenericSerializationVisitor;
 

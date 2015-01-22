@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\Normalizer;
+namespace Detail\Normalization\Normalizer;
 
 use JMS\Serializer\Serializer;
 

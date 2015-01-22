@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Core\Normalizer\Service;
+namespace Detail\Normalization\Normalizer\Service;
 
-use Application\Core\Normalizer\NormalizerInterface;
+use Detail\Normalization\Normalizer\NormalizerInterface;
 
 interface NormalizerAwareInterface
 {

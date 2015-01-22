@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\JMSSerializer\Handler;
+namespace Detail\Normalization\JMSSerializer\Handler;
 
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\ArrayCollectionHandler as BaseArrayCollectionHandler;

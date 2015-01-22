@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\JMSSerializer\Handler;
+namespace Detail\Normalization\JMSSerializer\Handler;
 
 use Doctrine\Common\Collections\Collection;
 
@@ -12,10 +12,6 @@ use JMS\Serializer\VisitorInterface;
 use Zend\View\Model\ModelInterface as ViewModel;
 
 use ZF\Hal\Collection as HalCollection;
-use ZF\Hal\View\HalJsonModel as HalJsonViewModel;
-
-//use Application\Core\View\JsonModel as JsonViewModel;
-use Zend\View\Model\JsonModel as JsonViewModel;
 
 class HalCollectionHandler implements SubscribingHandlerInterface
 {

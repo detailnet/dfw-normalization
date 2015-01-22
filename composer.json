@@ -26,10 +26,16 @@
         "squizlabs/php_codesniffer" : "~2.0.0",
         "phpmd/phpmd": "~2.1.3",
         "satooshi/php-coveralls": "dev-master",
-        "zendframework/zend-stdlib": "~2.3.3"
+        "zendframework/zend-stdlib": "~2.3.3",
+        "zfcampus/zf-hal": "~1.0.4",
+        "zendframework/zend-view": "~2.3.4",
+        "doctrine/collections": "1.2.*@dev"
     },
     "suggest": {
-        "zendframework/zend-stdlib": "For usage of NormalizerBasedHydrator"
+        "zendframework/zend-stdlib": "For usage of NormalizerBasedHydrator",
+        "zfcampus/zf-hal": "For usage of the HalCollectionHandler",
+        "zendframework/zend-view": "For usage of the HalCollectionHandler",
+        "doctrine/collections": "For usage of the HalCollectionHandler"
     },
     "autoload": {
         "psr-0": {

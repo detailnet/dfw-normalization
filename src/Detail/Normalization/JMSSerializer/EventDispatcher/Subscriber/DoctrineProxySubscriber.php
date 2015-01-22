@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\JMSSerializer\EventDispatcher\Subscriber;
+namespace Detail\Normalization\JMSSerializer\EventDispatcher\Subscriber;
 
 use JMS\Serializer\EventDispatcher\PreSerializeEvent;
 use JMS\Serializer\EventDispatcher\Subscriber\DoctrineProxySubscriber as JmsDoctrineProxySubscriber;

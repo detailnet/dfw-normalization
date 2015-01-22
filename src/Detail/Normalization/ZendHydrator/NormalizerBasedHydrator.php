@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\Core\Hydrator;
+namespace Detail\Normalization\ZendHydrator;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-use Application\Core\Normalizer\NormalizerInterface;
+use Detail\Normalization\Normalizer\NormalizerInterface;
 
 class NormalizerBasedHydrator implements
     HydratorInterface
