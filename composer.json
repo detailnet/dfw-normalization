@@ -1,0 +1,61 @@
+{
+    "name": "detailnet/dfw-normalization",
+    "description": "DETAIL Framework library for array/object (de-)normalization",
+    "type": "library",
+    "keywords": [
+        "dfw",
+        "detailnet",
+        "normalization",
+        "serialization",
+        "hydration"
+    ],
+    "homepage": "https://github.com/detailnet/dfw-normalization/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Wolf",
+            "email": "ivan.wolf@detailnet.ch"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "jms/serializer": "~0.16.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.4.0",
+        "squizlabs/php_codesniffer" : "~2.0.0",
+        "phpmd/phpmd": "~2.1.3",
+        "satooshi/php-coveralls": "dev-master",
+        "zendframework/zend-stdlib": "~2.3.3"
+    },
+    "suggest": {
+        "zendframework/zend-stdlib": "For usage of NormalizerBasedHydrator"
+    },
+    "autoload": {
+        "psr-0": {
+            "Detail\\FileConversion\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "DetailTest\\FileConversion\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
+    "archive": {
+        "exclude": [
+            "!vendor",
+            "tests",
+            "*phpunit.xml",
+            ".coveralls.yml",
+            ".travis.yml",
+            "build.xml",
+            "build.properties",
+            "composer.phar"
+        ]
+    }
+}
