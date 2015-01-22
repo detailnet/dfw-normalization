@@ -39,12 +39,12 @@
     },
     "autoload": {
         "psr-0": {
-            "Detail\\FileConversion\\": "src/"
+            "Detail\\Normalization\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "DetailTest\\FileConversion\\": "tests/"
+            "DetailTest\\Normalization\\": "tests/"
         }
     },
     "extra": {
