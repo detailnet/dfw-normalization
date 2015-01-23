@@ -22,7 +22,7 @@
         "jms/serializer": "~0.16.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.4.0",
+        "phpunit/phpunit": "~4.4.2",
         "squizlabs/php_codesniffer" : "~2.0.0",
         "phpmd/phpmd": "~2.1.3",
         "satooshi/php-coveralls": "dev-master",
