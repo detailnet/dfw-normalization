@@ -4,7 +4,20 @@ namespace Detail\Normalization\Normalizer;
 
 interface NormalizerInterface
 {
-    public function denormalize(array $data, $class);
+    /**
+     * @param array $data
+     * @param string $class
+     * @param array|string $groups
+     * @param string|integer $version
+     * @return object
+     */
+    public function denormalize(array $data, $class, $groups = null, $version = null);
 
-    public function normalize($object);
+    /**
+     * @param object $object
+     * @param array|string $groups
+     * @param string|integer $version
+     * @return array
+     */
+    public function normalize($object, $groups = null, $version = null);
 }
