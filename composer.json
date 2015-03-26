@@ -22,10 +22,14 @@
         "jms/serializer": "~0.16.0"
     },
     "require-dev": {
+        "rhumsaa/uuid": "~2.8",
         "phpunit/phpunit": "~4.4.5",
         "squizlabs/php_codesniffer" : "~2.2.0",
         "phpmd/phpmd": "~2.1.3",
         "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "rhumsaa/uuid": "For usage of the UUID handler of the JMS Serializer"
     },
     "autoload": {
         "psr-0": {
