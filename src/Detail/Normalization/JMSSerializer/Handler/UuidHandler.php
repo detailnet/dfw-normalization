@@ -47,7 +47,7 @@ class UuidHandler implements
         }
 
         if (!preg_match('/^' . self::UUID_V4_PATTERN . '$/', $data)) {
-            throw new Exception\RuntimeException('Invalid UUID version 4 format');;
+            throw new Exception\RuntimeException('Invalid UUID version 4 format');
         }
 
         $uuid = Uuid::fromString($data);

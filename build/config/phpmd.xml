@@ -7,7 +7,10 @@
 
     <description>Ruleset for all DETAIL NET projects</description>
 
-    <rule ref="rulesets/unusedcode.xml" />
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter"/>
+    </rule>
+
     <rule ref="rulesets/design.xml" />
 
     <rule ref="rulesets/naming.xml">
