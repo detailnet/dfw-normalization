@@ -76,6 +76,12 @@ class DateHandler extends BaseDateHandler
             return null;
         }
 
+        $format = isset($type['params'][0]) ? $type['params'][0] : $this->format;
+
+        if (strpos($format, '!') !== 0) {
+            $type['params'][0] = '!' . $format;
+        }
+
         return $this->createDateTime($data, $type);
     }
 
