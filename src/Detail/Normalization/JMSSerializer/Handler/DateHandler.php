@@ -78,7 +78,7 @@ class DateHandler extends BaseDateHandler
 
         $format = isset($type['params'][0]) ? $type['params'][0] : $this->format;
 
-        if (strpos($format, '!') !== 0) {
+        if ($format[0] !== '!') {
             $type['params'][0] = '!' . $format;
         }
 
