@@ -159,7 +159,7 @@ class DateHandler extends BaseDateHandler
      */
     protected function createDateTime($data, array $type)
     {
-        $timezone = isset($type['params'][1]) ? new \DateTimeZone($type['params'][1]) : $this->timezone;
+        $timezone = isset($type['params'][1]) ? new DateTimeZone($type['params'][1]) : $this->timezone;
         $format = isset($type['params'][0]) ? $type['params'][0] : $this->format;
 
         $datetime = DateTime::createFromFormat($format, (string) $data, $timezone);
