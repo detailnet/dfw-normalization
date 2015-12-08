@@ -76,7 +76,7 @@ class DateHandler extends BaseDateHandler
                 'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
                 'type' => 'DateTimeImmutable',
                 'format' => $format,
-                'method' => 'serializeDateTimeImmutable' ,
+                'method' => 'serializeDateTimeImmutable',
             );
         }
 
@@ -85,20 +85,20 @@ class DateHandler extends BaseDateHandler
 
     /**
      * @param VisitorInterface $visitor
-     * @param \DateTimeImmutable $date
+     * @param DateTimeImmutable $date
      * @param array $type
      * @param Context $context
      * @return string
      */
     public function serializeDateTimeImmutable(
         VisitorInterface $visitor,
-        \DateTimeImmutable $date,
+        DateTimeImmutable $date,
         array $type,
         Context $context
     ) {
         return $this->serializeDateTime(
             $visitor,
-            new \DateTime($date->format('Y-m-d H:i:s')),
+            new DateTime($date->format('Y-m-d H:i:s')),
             $type,
             $context
         );
@@ -133,21 +133,21 @@ class DateHandler extends BaseDateHandler
      */
     public function deserializeDateTimeImmutableFromPhp(PhpDeserializationVisitor $visitor, $data, array $type)
     {
-        return $this->crateImmutableDateTimeFromMutable(
+        return $this->createImmutableDateTimeFromMutable(
             $this->deserializeDateTimeFromPhp($visitor, $data, $type)
         );
     }
 
     public function deserializeDateTimeImmutableFromXml(XmlDeserializationVisitor $visitor, $data, array $type)
     {
-        return $this->crateImmutableDateTimeFromMutable(
+        return $this->createImmutableDateTimeFromMutable(
             $this->deserializeDateTimeFromXml($visitor, $data, $type)
         );
     }
 
     public function deserializeDateTimeImmutableFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
     {
-        return $this->crateImmutableDateTimeFromMutable(
+        return $this->createImmutableDateTimeFromMutable(
             $this->deserializeDateTimeFromJson($visitor, $data, $type)
         );
     }
@@ -175,9 +175,13 @@ class DateHandler extends BaseDateHandler
      * @param DateTime $date
      * @return DateTimeImmutable
      */
-    private function crateImmutableDateTimeFromMutable(DateTime $date)
+    private function createImmutableDateTimeFromMutable(DateTime $date)
     {
-        // Note DateTimeImmutable::createFromImmutable($date) available as of PHP 5.6
+        if (method_exists(DateTimeImmutable::CLASS, 'createFromMutable')) {
+            return DateTimeImmutable::createFromMutable($date);
+        }
+
+        // Fallback for PHP < 5.6
         return DateTimeImmutable::createFromFormat('U', $date->format('U'));
     }
 }
