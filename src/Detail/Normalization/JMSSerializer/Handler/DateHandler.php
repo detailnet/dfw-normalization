@@ -5,8 +5,10 @@ namespace Detail\Normalization\JMSSerializer\Handler;
 use DateTime;
 use DateTimeZone;
 
+use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\DateHandler as BaseDateHandler;
+use JMS\Serializer\VisitorInterface;
 
 use Detail\Normalization\Exception;
 use Detail\Normalization\JMSSerializer\PhpDeserializationVisitor;
@@ -41,27 +43,56 @@ class DateHandler extends BaseDateHandler
     public static function getSubscribingMethods()
     {
         $methods = array();
-        $formats = array('php');
-        $types = array('DateTime', 'DateInterval');
 
-        foreach ($formats as $format) {
+        // Register deserialization of 'DateTime' for 'php' format
+        $methods[] = array(
+            'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+            'type' => 'DateTime',
+            'format' => 'php',
+        );
+
+        // Register serialization of 'DateTime' and 'DateInterval' for 'php' format
+        foreach (array('DateTime', 'DateInterval') as $type) {
             $methods[] = array(
-                'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
-                'type' => 'DateTime',
-                'format' => $format,
+                'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
+                'type' => $type,
+                'format' => 'php',
+                'method' => 'serialize' . $type,
             );
+        }
 
-            foreach ($types as $type) {
-                $methods[] = array(
-                    'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
-                    'type' => $type,
-                    'format' => $format,
-                    'method' => 'serialize' . $type,
-                );
-            }
+        // Register serialization of 'DateTimeImmutable' for all formats
+        foreach (array('json', 'xml', 'yml', 'php') as $format) {
+            $methods[] = array(
+                'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
+                'type' => 'DateTimeImmutable',
+                'format' => $format,
+                'method' => 'serializeDateTimeImmutable' ,
+            );
         }
 
         return $methods;
+    }
+
+    /**
+     * @param VisitorInterface $visitor
+     * @param \DateTimeImmutable $date
+     * @param array $type
+     * @param Context $context
+     * @return string
+     */
+    public function serializeDateTimeImmutable(
+        VisitorInterface $visitor,
+        \DateTimeImmutable $date,
+        array $type,
+        Context $context
+    ) {
+        return $this->serializeDateTime(
+            $visitor,
+            new \DateTime($date->format('Y-m-d H:i:s')),
+            $type,
+            $context
+        );
     }
 
     /**
