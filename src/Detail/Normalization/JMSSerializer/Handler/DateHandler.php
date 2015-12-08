@@ -3,12 +3,15 @@
 namespace Detail\Normalization\JMSSerializer\Handler;
 
 use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\DateHandler as BaseDateHandler;
+use JMS\Serializer\JsonDeserializationVisitor;
 use JMS\Serializer\VisitorInterface;
+use JMS\Serializer\XmlDeserializationVisitor;
 
 use Detail\Normalization\Exception;
 use Detail\Normalization\JMSSerializer\PhpDeserializationVisitor;
@@ -44,14 +47,14 @@ class DateHandler extends BaseDateHandler
     {
         $methods = array();
 
-        // Register deserialization of 'DateTime' for 'php' format
+        // Subscribe deserialization of 'DateTime' for 'php' format
         $methods[] = array(
             'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
             'type' => 'DateTime',
             'format' => 'php',
         );
 
-        // Register serialization of 'DateTime' and 'DateInterval' for 'php' format
+        // Subscribe serialization of 'DateTime' and 'DateInterval' for 'php' format
         foreach (array('DateTime', 'DateInterval') as $type) {
             $methods[] = array(
                 'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
@@ -61,8 +64,14 @@ class DateHandler extends BaseDateHandler
             );
         }
 
-        // Register serialization of 'DateTimeImmutable' for all formats
-        foreach (array('json', 'xml', 'yml', 'php') as $format) {
+        // Subscribe deserialization and serialization of 'DateTimeImmutable' for 'json', 'xml' and 'php' formats
+        foreach (array('json', 'xml', 'php') as $format) {
+            $methods[] = array(
+                'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+                'type' => 'DateTimeImmutable',
+                'format' => $format,
+            );
+
             $methods[] = array(
                 'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
                 'type' => 'DateTimeImmutable',
@@ -117,6 +126,33 @@ class DateHandler extends BaseDateHandler
     }
 
     /**
+     * @param PhpDeserializationVisitor $visitor
+     * @param string $data
+     * @param array $type
+     * @return DateTimeImmutable|null
+     */
+    public function deserializeDateTimeImmutableFromPhp(PhpDeserializationVisitor $visitor, $data, array $type)
+    {
+        return $this->crateImmutableDateTimeFromMutable(
+            $this->deserializeDateTimeFromPhp($visitor, $data, $type)
+        );
+    }
+
+    public function deserializeDateTimeImmutableFromXml(XmlDeserializationVisitor $visitor, $data, array $type)
+    {
+        return $this->crateImmutableDateTimeFromMutable(
+            $this->deserializeDateTimeFromXml($visitor, $data, $type)
+        );
+    }
+
+    public function deserializeDateTimeImmutableFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
+    {
+        return $this->crateImmutableDateTimeFromMutable(
+            $this->deserializeDateTimeFromJson($visitor, $data, $type)
+        );
+    }
+
+    /**
      * @param string $data
      * @param array $type
      * @return DateTime
@@ -133,5 +169,15 @@ class DateHandler extends BaseDateHandler
         }
 
         return $datetime;
+    }
+
+    /**
+     * @param DateTime $date
+     * @return DateTimeImmutable
+     */
+    private function crateImmutableDateTimeFromMutable(DateTime $date)
+    {
+        // Note DateTimeImmutable::createFromImmutable($date) available as of PHP 5.6
+        return DateTimeImmutable::createFromFormat('U', $date->format('U'));
     }
 }
