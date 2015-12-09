@@ -73,7 +73,7 @@ class DateImmutableHandler extends BaseDateHandler
     ) {
         return $this->serializeDateTime(
             $visitor,
-            new DateTime($date->format('Y-m-d H:i:s')),
+            $this->createMutableDateTimeFromImmutable($date),
             $type,
             $context
         );
@@ -92,6 +92,12 @@ class DateImmutableHandler extends BaseDateHandler
         );
     }
 
+    /**
+     * @param XmlDeserializationVisitor $visitor
+     * @param $data
+     * @param array $type
+     * @return DateTimeImmutable|null
+     */
     public function deserializeDateTimeImmutableFromXml(XmlDeserializationVisitor $visitor, $data, array $type)
     {
         return $this->createImmutableDateTimeFromMutable(
@@ -99,6 +105,12 @@ class DateImmutableHandler extends BaseDateHandler
         );
     }
 
+    /**
+     * @param JsonDeserializationVisitor $visitor
+     * @param $data
+     * @param array $type
+     * @return DateTimeImmutable|null
+     */
     public function deserializeDateTimeImmutableFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
     {
         return $this->createImmutableDateTimeFromMutable(
@@ -107,16 +119,33 @@ class DateImmutableHandler extends BaseDateHandler
     }
 
     /**
-     * @param DateTime $date
+     * @param DateTime|null $date
      * @return DateTimeImmutable
      */
-    private function createImmutableDateTimeFromMutable(DateTime $date)
+    private function createImmutableDateTimeFromMutable(DateTime $date = null)
     {
+        if ($date === null) {
+            return null;
+        }
+
         if (method_exists(DateTimeImmutable::CLASS, 'createFromMutable')) {
             return DateTimeImmutable::createFromMutable($date);
         }
 
         // Fallback for PHP < 5.6
-        return DateTimeImmutable::createFromFormat('U', $date->format('U'));
+        return new DateTimeImmutable($date->format('Y-m-d H:i:s'), $date->getTimezone());
+    }
+
+    /**
+     * @param DateTimeImmutable|null $date
+     * @return DateTime
+     */
+    private function createMutableDateTimeFromImmutable(DateTimeImmutable $date = null)
+    {
+        if ($date === null) {
+            return null;
+        }
+
+        return new DateTime($date->format('Y-m-d H:i:s'), $date->getTimezone());
     }
 }
