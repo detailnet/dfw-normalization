@@ -13,7 +13,6 @@ use JMS\Serializer\JsonDeserializationVisitor;
 use JMS\Serializer\VisitorInterface;
 use JMS\Serializer\XmlDeserializationVisitor;
 
-use Detail\Normalization\Exception;
 use Detail\Normalization\JMSSerializer\PhpDeserializationVisitor;
 
 class DateImmutableHandler extends BaseDateHandler
