@@ -33,11 +33,11 @@ class JMSSerializerBasedNormalizer implements
      */
     public function denormalize(array $data, $class, $groups = null, $version = null)
     {
-        $serializationContext = new DeserializationContext();
+        $context = new DeserializationContext();
 
-        $this->applyExclusionStrategies($serializationContext, $groups, $version);
+        $this->applyExclusionStrategies($context, $groups, $version);
 
-        return $this->jmsSerializer->deserialize($data, $class, 'php');
+        return $this->jmsSerializer->deserialize($data, $class, 'php', $context);
     }
 
     /**
@@ -60,11 +60,11 @@ class JMSSerializerBasedNormalizer implements
      */
     public function serialize($object, $format, $groups = null, $version = null)
     {
-        $serializationContext = new SerializationContext();
+        $context = new SerializationContext();
 
-        $this->applyExclusionStrategies($serializationContext, $groups, $version);
+        $this->applyExclusionStrategies($context, $groups, $version);
 
-        return $this->jmsSerializer->serialize($object, $format, $serializationContext);
+        return $this->jmsSerializer->serialize($object, $format, $context);
     }
 
     /**
