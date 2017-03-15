@@ -18,15 +18,15 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "jms/serializer": "~0.16.0"
+        "php": "^7.0",
+        "jms/serializer": "^1.5"
     },
     "require-dev": {
-        "ramsey/uuid": "~2.8",
-        "phpunit/phpunit": "~4.4.5",
-        "squizlabs/php_codesniffer" : "~2.2.0",
-        "phpmd/phpmd": "~2.1.3",
-        "satooshi/php-coveralls": "dev-master"
+        "ramsey/uuid": "^3.5",
+        "phpunit/phpunit": "^6.0",
+        "squizlabs/php_codesniffer" : "^2.2",
+        "phpmd/phpmd": "^2.1.3",
+        "satooshi/php-coveralls": "^1.0"
     },
     "suggest": {
         "ramsey/uuid": "For usage of the UUID handler of the JMS Serializer"
