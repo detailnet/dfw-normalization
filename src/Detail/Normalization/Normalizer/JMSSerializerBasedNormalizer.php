@@ -48,7 +48,10 @@ class JMSSerializerBasedNormalizer implements
      */
     public function normalize($object, $groups = null, $version = null)
     {
-        return $this->serialize($object, 'php', $groups, $version);
+        /** @var array $data */
+        $data = $this->serialize($object, 'php', $groups, $version);
+
+        return $data;
     }
 
     /**
