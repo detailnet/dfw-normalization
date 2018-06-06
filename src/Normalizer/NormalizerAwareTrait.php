@@ -1,8 +1,6 @@
 <?php
 
-namespace Detail\Normalization\Normalizer\Service;
-
-use Detail\Normalization\Normalizer\NormalizerInterface;
+namespace Detail\Normalization\Normalizer;
 
 trait NormalizerAwareTrait
 {

@@ -32,18 +32,13 @@
         "ramsey/uuid": "For usage of the UUID handler of the JMS Serializer"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Detail\\Normalization\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
+        "psr-4": {
             "DetailTest\\Normalization\\": "tests/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
         }
     },
     "archive": {

@@ -127,12 +127,7 @@ class DateImmutableHandler extends BaseDateHandler
             return null;
         }
 
-        if (method_exists(DateTimeImmutable::CLASS, 'createFromMutable')) {
-            return DateTimeImmutable::createFromMutable($date);
-        }
-
-        // Fallback for PHP < 5.6
-        return new DateTimeImmutable($date->format('Y-m-d H:i:s'), $date->getTimezone());
+        return DateTimeImmutable::createFromMutable($date);
     }
 
     /**
