@@ -18,14 +18,14 @@
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "jms/serializer": "^1.5"
     },
     "require-dev": {
         "ramsey/uuid": "^3.5",
         "phpunit/phpunit": "^6.0",
         "squizlabs/php_codesniffer" : "^2.2",
-        "phpmd/phpmd": "^2.1.3",
+        "phpmd/phpmd": "^2.1",
         "satooshi/php-coveralls": "^1.0"
     },
     "suggest": {

@@ -2,7 +2,7 @@
 
 namespace Detail\Normalization\JMSSerializer\Handler;
 
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
