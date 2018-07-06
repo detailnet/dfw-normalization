@@ -3,6 +3,7 @@
 namespace Detail\Normalization\JMSSerializer\Handler;
 
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
@@ -16,33 +17,40 @@ class UuidHandler implements
 {
     const UUID_V4_PATTERN = '[a-f0-9]{8}\-[a-f0-9]{4}\-4[a-f0-9]{3}\-(8|9|a|b)[a-f0-9]{3}\-[a-f0-9]{12}';
 
+    /**
+     * @return array
+     */
     public static function getSubscribingMethods()
     {
-        $methods = array();
-        $formats = array('php', 'json', 'xml', 'yml');
+        $methods = [];
+        $formats = ['php', 'json', 'xml', 'yml'];
 
         foreach ($formats as $format) {
-            $methods[] = array(
+            $methods[] = [
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'type' => 'uuid',
                 'format' => $format,
                 'method' => 'deserializeUuid',
-            );
+            ];
 
-            $methods[] = array(
+            $methods[] = [
                 'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
                 'type' => 'uuid',
                 'format' => $format,
                 'method' => 'serializeUuid',
-            );
+            ];
         }
 
         return $methods;
     }
 
-    public function deserializeUuid(VisitorInterface $visitor, $data, array $type, Context $context)
-    {
-        if (null === $data) {
+    public function deserializeUuid(
+        VisitorInterface $visitor,
+        ?string $data,
+        array $type,
+        Context $context
+    ): ?UuidInterface {
+        if ($data === null) {
             return null;
         }
 
@@ -55,7 +63,7 @@ class UuidHandler implements
         return $uuid;
     }
 
-    public function serializeUuid(VisitorInterface $visitor, Uuid $uuid, array $type, Context $context)
+    public function serializeUuid(VisitorInterface $visitor, Uuid $uuid, array $type, Context $context): ?string
     {
         return $visitor->visitString($uuid->toString(), $type, $context);
     }

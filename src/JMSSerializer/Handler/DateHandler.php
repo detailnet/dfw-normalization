@@ -2,52 +2,86 @@
 
 namespace Detail\Normalization\JMSSerializer\Handler;
 
+use DateInterval;
 use DateTime;
-use DateTimeZone;
+use DateTimeImmutable;
 
+use JMS\Serializer\AbstractVisitor;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\DateHandler as BaseDateHandler;
+use JMS\Serializer\JsonDeserializationVisitor;
+
+use Detail\Normalization\JMSSerializer\PhpDeserializationVisitor;
 
 class DateHandler extends BaseDateHandler
 {
-    use DatePhpDeserializationTrait;
-
-    /**
-     * @param string $defaultFormat
-     * @param string $defaultTimezone
-     */
-    public function __construct($defaultFormat = DateTime::ISO8601, $defaultTimezone = 'UTC')
-    {
-        $this->format = $defaultFormat;
-        $this->timezone = new DateTimeZone($defaultTimezone);
-
-        parent::__construct($defaultFormat, $defaultTimezone);
-    }
-
     /**
      * @return array
      */
     public static function getSubscribingMethods()
     {
-        $methods = array();
+        $methods = parent::getSubscribingMethods();
+        $formats = ['php'];
+        $types = ['DateTime', 'DateTimeImmutable', 'DateInterval'];
 
-        // Subscribe deserialization of 'DateTime' for 'php' format
-        $methods[] = array(
-            'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
-            'type' => 'DateTime',
-            'format' => 'php',
-        );
+        foreach ($types as $type) {
+            foreach ($formats as $format) {
+                $methods[] = [
+                    'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+                    'type' => $type,
+                    'format' => $format,
+                ];
 
-        // Subscribe serialization of 'DateTime' and 'DateInterval' for 'php' format
-        foreach (array('DateTime', 'DateInterval') as $type) {
-            $methods[] = array(
-                'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
-                'type' => $type,
-                'format' => 'php',
-                'method' => 'serialize' . $type,
-            );
+                $methods[] = [
+                    'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
+                    'type' => $type,
+                    'format' => $format,
+                    'method' => 'serialize' . ucfirst($type),
+                ];
+            }
         }
 
         return $methods;
+    }
+
+    public function deserializeDateTimeFromPhp(
+        PhpDeserializationVisitor $visitor,
+        ?string $data,
+        array $type
+    ): ?DateTime {
+        return $this->deserializeDateTimeFromJson(
+            $this->createJsonDeserializationVisitor($visitor),
+            $data,
+            $type
+        );
+    }
+
+    public function deserializeDateTimeImmutableFromPhp(
+        PhpDeserializationVisitor $visitor,
+        ?string $data,
+        array $type
+    ): ?DateTimeImmutable {
+        return $this->deserializeDateTimeImmutableFromJson(
+            $this->createJsonDeserializationVisitor($visitor),
+            $data,
+            $type
+        );
+    }
+
+    public function deserializeDateIntervalFromPhp(
+        PhpDeserializationVisitor $visitor,
+        ?string $data,
+        array $type
+    ): ?DateInterval {
+        return $this->deserializeDateIntervalFromJson(
+            $this->createJsonDeserializationVisitor($visitor),
+            $data,
+            $type
+        );
+    }
+
+    private function createJsonDeserializationVisitor(AbstractVisitor $visitor): JsonDeserializationVisitor
+    {
+        return new JsonDeserializationVisitor($visitor->getNamingStrategy());
     }
 }
