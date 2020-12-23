@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Detail\Normalization\Normalizer;
 
-interface NormalizerInterface
+interface Normalizer
 {
     /**
      * @param array $data

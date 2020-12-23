@@ -12,8 +12,8 @@ use function assert;
 use function is_array;
 
 class JMSSerializerBasedNormalizer implements
-    NormalizerInterface,
-    SerializerInterface
+    Normalizer,
+    Serializer
 {
     protected Serializer $jmsSerializer;
 

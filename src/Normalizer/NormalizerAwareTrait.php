@@ -6,14 +6,14 @@ namespace Detail\Normalization\Normalizer;
 
 trait NormalizerAwareTrait
 {
-    protected NormalizerInterface $normalizer;
+    protected Normalizer $normalizer;
 
-    public function getNormalizer(): NormalizerInterface
+    public function getNormalizer(): Normalizer
     {
         return $this->normalizer;
     }
 
-    public function setNormalizer(NormalizerInterface $normalizer): void
+    public function setNormalizer(Normalizer $normalizer): void
     {
         $this->normalizer = $normalizer;
     }

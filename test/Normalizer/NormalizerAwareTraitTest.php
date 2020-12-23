@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DetailTest\Normalization\Normalizer;
 
+use Detail\Normalization\Normalizer\Normalizer;
 use Detail\Normalization\Normalizer\NormalizerAwareTrait;
-use Detail\Normalization\Normalizer\NormalizerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function assert;
@@ -16,13 +16,13 @@ class NormalizerAwareTraitTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->normalizer = $this->getMockBuilder(NormalizerInterface::CLASS)->getMock();
+        $this->normalizer = $this->getMockBuilder(Normalizer::CLASS)->getMock();
     }
 
     public function testSetsNormalizer(): void
     {
         $normalizer = $this->getNormalizer();
-        assert($normalizer instanceof NormalizerInterface);
+        assert($normalizer instanceof Normalizer);
 
         $object = $this->getMockBuilder(NormalizerAwareTrait::CLASS)->getMockForTrait();
         assert($object instanceof NormalizerAwareTrait);
