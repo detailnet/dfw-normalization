@@ -5,7 +5,7 @@ parameters:
   paths:
     - %currentWorkingDirectory%/src/
 #  checkGenericClassInNonGenericObjectType: false
-#  checkMissingIterableValueType: false
+  checkMissingIterableValueType: false
   treatPhpDocTypesAsCertain: false
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon

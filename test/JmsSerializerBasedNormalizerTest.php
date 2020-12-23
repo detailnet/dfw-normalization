@@ -36,6 +36,7 @@ class JmsSerializerBasedNormalizerTest extends TestCase
 
     /**
      * @param array|object $expectedResult
+     *
      * @dataProvider provideDenormalizer
      */
     public function testItDenormalizes(Normalizer $normalizer, array $data, $expectedResult): void

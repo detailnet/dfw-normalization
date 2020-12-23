@@ -20,9 +20,6 @@ class UuidHandler implements
 {
     private const TYPE = 'uuid';
 
-    /**
-     * @return array
-     */
     public static function getSubscribingMethods(): array
     {
         $methods = [];
