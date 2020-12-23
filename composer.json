@@ -17,15 +17,22 @@
             "email": "ivan.wolf@detailnet.ch"
         }
     ],
+    "config": {
+        "sort-packages": true
+    },
     "require": {
         "php": "^7.4",
         "jms/serializer": "^3.10"
     },
     "require-dev": {
-        "ramsey/uuid": "^4.1",
+        "doctrine/coding-standard": "^8.1",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/phpstan": "^0.12.19",
+        "phpstan/phpstan-strict-rules": "^0.12.2",
         "phpunit/phpunit": "^9.5",
-        "squizlabs/php_codesniffer" : "^3.5",
-        "roave/security-advisories": "dev-master"
+        "ramsey/uuid": "^4.1",
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer" : "^3.5"
     },
     "suggest": {
         "ramsey/uuid": "For usage of the UUID handler of the JMS Serializer"
@@ -43,13 +50,12 @@
     "scripts": {
         "check": [
             "@cs-check",
-            "@md-check",
+            "@stan-check",
             "@test"
         ],
-        "cs-check": "phpcs --standard=phpcs.xml -v",
-        "cs-check-report": "phpcs --standard=phpcs.xml --report=checkstyle --report-file=build/checkstyle.xml",
-        "md-check": "phpmd src xml phpmd.xml",
-        "md-check-report": "phpmd src xml phpmd.xml --reportfile build/pmd.xml",
+        "cs-check": "phpcs -s",
+        "cs-fix": "phpcbf",
+        "stan-check": "phpstan analyse",
         "test": "phpunit --colors=always",
         "test-coverage-html": "phpunit --coverage-html build/coverage",
         "test-coverage-clover": "phpunit --coverage-clover build/clover.xml"
