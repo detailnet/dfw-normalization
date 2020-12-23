@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "DetailTest\\Normalization\\": "tests/"
+            "DetailTest\\Normalization\\": "test/"
         }
     },
     "scripts": {
@@ -50,7 +50,7 @@
         "cs-check-report": "phpcs --standard=phpcs.xml --report=checkstyle --report-file=build/checkstyle.xml",
         "md-check": "phpmd src xml phpmd.xml",
         "md-check-report": "phpmd src xml phpmd.xml --reportfile build/pmd.xml",
-        "test": "phpunit",
+        "test": "phpunit --colors=always",
         "test-coverage-html": "phpunit --coverage-html build/coverage",
         "test-coverage-clover": "phpunit --coverage-clover build/clover.xml"
     }
