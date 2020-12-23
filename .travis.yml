@@ -10,6 +10,7 @@ matrix:
     - php: 7.4
       env:
         - CS_CHECK=true
+        - STAN_CHECK=true
         - TEST_COVERAGE=true
 
 before_install:
@@ -23,6 +24,7 @@ install:
 
 script:
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
+  - if [[ $STAN_CHECK == 'true' ]]; then composer stan-check ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage-clover ; else composer test ; fi
 
 after_script:
