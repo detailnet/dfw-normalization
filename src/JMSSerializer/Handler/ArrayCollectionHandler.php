@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Detail\Normalization\JMSSerializer\Handler;
 
 use JMS\Serializer\GraphNavigator;
@@ -10,7 +12,7 @@ class ArrayCollectionHandler extends BaseArrayCollectionHandler
     /**
      * @return array
      */
-    public static function getSubscribingMethods()
+    public static function getSubscribingMethods(): array
     {
         $methods = parent::getSubscribingMethods();
         $formats = ['php'];

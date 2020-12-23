@@ -1,19 +1,18 @@
 <?php
 
-namespace DetailTest\Normalization\Normalizer;
+declare(strict_types=1);
 
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+namespace DetailTest\Normalization\Normalizer;
 
 use Detail\Normalization\Normalizer\NormalizerAwareTrait;
 use Detail\Normalization\Normalizer\NormalizerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use function assert;
 
 class NormalizerAwareTraitTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $normalizer;
+    private MockObject $normalizer;
 
     protected function setUp(): void
     {
@@ -22,11 +21,11 @@ class NormalizerAwareTraitTest extends TestCase
 
     public function testSetsNormalizer(): void
     {
-        /** @var NormalizerInterface $normalizer */
         $normalizer = $this->getNormalizer();
+        assert($normalizer instanceof NormalizerInterface);
 
-        /** @var NormalizerAwareTrait $object */
         $object = $this->getMockBuilder(NormalizerAwareTrait::CLASS)->getMockForTrait();
+        assert($object instanceof NormalizerAwareTrait);
 
         $this->assertNull($object->getNormalizer());
 

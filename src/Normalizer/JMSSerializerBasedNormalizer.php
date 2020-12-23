@@ -1,24 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Detail\Normalization\Normalizer;
 
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
+use function assert;
+use function is_array;
 
 class JMSSerializerBasedNormalizer implements
     NormalizerInterface,
     SerializerInterface
 {
-    /**
-     * @var Serializer
-     */
-    protected $jmsSerializer;
+    protected Serializer $jmsSerializer;
 
-    /**
-     * @param Serializer $jmsSerializer
-     */
     public function __construct(Serializer $jmsSerializer)
     {
         $this->jmsSerializer = $jmsSerializer;
@@ -26,12 +24,12 @@ class JMSSerializerBasedNormalizer implements
 
     /**
      * @param array $data
-     * @param string $class
      * @param array|string|null $groups
-     * @param string|integer|null $version
+     * @param string|int|null $version
+     *
      * @return mixed
      */
-    public function denormalize(array $data, $class, $groups = null, $version = null)
+    public function denormalize(array $data, string $class, $groups = null, $version = null)
     {
         $context = new DeserializationContext();
 
@@ -43,25 +41,24 @@ class JMSSerializerBasedNormalizer implements
     /**
      * @param mixed $object
      * @param array|string|null $groups
-     * @param string|integer|null $version
+     * @param string|int|null $version
+     *
      * @return array
      */
-    public function normalize($object, $groups = null, $version = null)
+    public function normalize($object, $groups = null, $version = null): array
     {
-        /** @var array $data */
         $data = $this->serialize($object, 'php', $groups, $version);
+        assert(is_array($data));
 
         return $data;
     }
 
     /**
      * @param mixed $object
-     * @param string $format
      * @param array|string|null $groups
-     * @param string|integer|null $version
-     * @return string
+     * @param string|int|null $version
      */
-    public function serialize($object, $format, $groups = null, $version = null)
+    public function serialize($object, string $format, $groups = null, $version = null): string
     {
         $context = new SerializationContext();
 
@@ -71,11 +68,10 @@ class JMSSerializerBasedNormalizer implements
     }
 
     /**
-     * @param Context $context
      * @param array|string|null $groups
-     * @param string|integer|null $version
+     * @param string|int|null $version
      */
-    protected function applyExclusionStrategies(Context $context, $groups = null, $version = null)
+    protected function applyExclusionStrategies(Context $context, $groups = null, $version = null): void
     {
         $context->enableMaxDepthChecks();
 
@@ -83,8 +79,10 @@ class JMSSerializerBasedNormalizer implements
             $context->setGroups($groups);
         }
 
-        if ($version !== null) {
-            $context->setVersion($version);
+        if ($version === null) {
+            return;
         }
+
+        $context->setVersion($version);
     }
 }

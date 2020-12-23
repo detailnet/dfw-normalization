@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Detail\Normalization\Normalizer;
 
 interface SerializerInterface
 {
     /**
      * @param mixed $object
-     * @param string $format
      * @param array|string $groups
-     * @param string|integer $version
-     * @return string
+     * @param string|int $version
      */
-    public function serialize($object, $format, $groups = null, $version = null);
+    public function serialize($object, string $format, $groups = null, $version = null): string;
 }

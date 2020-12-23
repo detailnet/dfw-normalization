@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Detail\Normalization\JMSSerializer;
 
 use JMS\Serializer\GenericDeserializationVisitor;

@@ -1,26 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Detail\Normalization\Normalizer;
 
 trait NormalizerAwareTrait
 {
-    /**
-     * @var NormalizerInterface
-     */
-    protected $normalizer;
+    protected NormalizerInterface $normalizer;
 
-    /**
-     * @return NormalizerInterface
-     */
-    public function getNormalizer()
+    public function getNormalizer(): NormalizerInterface
     {
         return $this->normalizer;
     }
 
-    /**
-     * @param NormalizerInterface $normalizer
-     */
-    public function setNormalizer(NormalizerInterface $normalizer)
+    public function setNormalizer(NormalizerInterface $normalizer): void
     {
         $this->normalizer = $normalizer;
     }

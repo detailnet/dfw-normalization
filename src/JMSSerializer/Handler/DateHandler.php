@@ -1,24 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Detail\Normalization\JMSSerializer\Handler;
 
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
-
+use Detail\Normalization\JMSSerializer\PhpDeserializationVisitor;
 use JMS\Serializer\AbstractVisitor;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\DateHandler as BaseDateHandler;
 use JMS\Serializer\JsonDeserializationVisitor;
-
-use Detail\Normalization\JMSSerializer\PhpDeserializationVisitor;
+use function ucfirst;
 
 class DateHandler extends BaseDateHandler
 {
     /**
      * @return array
      */
-    public static function getSubscribingMethods()
+    public static function getSubscribingMethods(): array
     {
         $methods = parent::getSubscribingMethods();
         $formats = ['php'];

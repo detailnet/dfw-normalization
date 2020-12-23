@@ -15,20 +15,19 @@
     <file>test</file>
 
     <rule ref="Doctrine">
-<!--        <exclude name="Generic.Formatting.MultipleStatementAlignment"/>-->
+        <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
 <!--        <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit"/>-->
         <exclude name="SlevomatCodingStandard.Namespaces.UseSpacing.IncorrectLinesCountBetweenDifferentTypeOfUse"/>
 <!--        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification"/>-->
 <!--        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification"/>-->
 <!--        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"/>-->
-        <!-- Allow multi-line array with single value -->
-<!--        <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed"/>-->
-<!--        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>-->
+        <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
     </rule>
-<!--    <rule ref="Generic.Formatting.SpaceAfterNot">-->
-<!--        <properties>-->
-<!--            <property name="spacing" value="0"/>-->
-<!--        </properties>-->
-<!--    </rule>-->
+    <rule ref="Generic.Formatting.SpaceAfterNot">
+        <properties>
+            <property name="spacing" value="0"/>
+        </properties>
+    </rule>
 </ruleset>
