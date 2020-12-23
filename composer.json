@@ -57,7 +57,6 @@
         "cs-fix": "phpcbf",
         "stan-check": "phpstan analyse",
         "test": "phpunit --colors=always",
-        "test-coverage-html": "phpunit --coverage-html build/coverage",
-        "test-coverage-clover": "phpunit --coverage-clover build/clover.xml"
+        "test-coverage": "phpunit --coverage-html build/coverage"
     }
 }
