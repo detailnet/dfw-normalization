@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Detail\Normalization\Normalizer;
+namespace Detail\Normalization;
 
-interface NormalizerAwareInterface
+interface Normalization
 {
     public function setNormalizer(Normalizer $normalizer): void;
 }

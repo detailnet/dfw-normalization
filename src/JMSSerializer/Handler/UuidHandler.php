@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Detail\Normalization\JMSSerializer\Handler;
 
-use Detail\Normalization\Exception;
-use JMS\Serializer\Context;
-use JMS\Serializer\GraphNavigator;
+use JMS\Serializer\DeserializationContext;
+use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
-use JMS\Serializer\VisitorInterface;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\Visitor\DeserializationVisitorInterface;
+use JMS\Serializer\Visitor\SerializationVisitorInterface;
+use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use function preg_match;
+use function sprintf;
 
 class UuidHandler implements
     SubscribingHandlerInterface
 {
-    public const UUID_V4_PATTERN = '[a-f0-9]{8}\-[a-f0-9]{4}\-4[a-f0-9]{3}\-(8|9|a|b)[a-f0-9]{3}\-[a-f0-9]{12}';
+    private const TYPE = 'uuid';
 
     /**
      * @return array
@@ -24,19 +26,19 @@ class UuidHandler implements
     public static function getSubscribingMethods(): array
     {
         $methods = [];
-        $formats = ['php', 'json', 'xml', 'yml'];
+        $formats = ['json', 'xml', 'yml'];
 
         foreach ($formats as $format) {
             $methods[] = [
-                'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
-                'type' => 'uuid',
+                'direction' => GraphNavigatorInterface::DIRECTION_DESERIALIZATION,
+                'type' => self::TYPE,
                 'format' => $format,
                 'method' => 'deserializeUuid',
             ];
 
             $methods[] = [
-                'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
-                'type' => 'uuid',
+                'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
+                'type' => self::TYPE,
                 'format' => $format,
                 'method' => 'serializeUuid',
             ];
@@ -46,24 +48,28 @@ class UuidHandler implements
     }
 
     public function deserializeUuid(
-        VisitorInterface $visitor,
-        ?string $data,
+        DeserializationVisitorInterface $visitor,
+        ?string $uuid,
         array $type,
-        Context $context
+        SerializationContext $context
     ): ?UuidInterface {
-        if ($data === null) {
+        if ($uuid === null) {
             return null;
         }
 
-        if (!preg_match('/^' . self::UUID_V4_PATTERN . '$/', $data)) {
-            throw new Exception\RuntimeException('Invalid UUID version 4 format');
+        if (!Uuid::isValid($uuid)) {
+            throw new InvalidUuidStringException(sprintf('Invalid UUID "%s" given', $uuid));
         }
 
-        return Uuid::fromString($data);
+        return Uuid::fromString($uuid);
     }
 
-    public function serializeUuid(VisitorInterface $visitor, Uuid $uuid, array $type, Context $context): ?string
-    {
-        return $visitor->visitString($uuid->toString(), $type, $context);
+    public function serializeUuid(
+        SerializationVisitorInterface $visitor,
+        UuidInterface $uuid,
+        array $type,
+        DeserializationContext $context
+    ): ?string {
+        return $visitor->visitString($uuid->toString(), $type);
     }
 }
