@@ -37,14 +37,14 @@ jobs:
       matrix:
         php:
           - 7.4
-          - 8.0
+#          - 8.0
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build container
         run: docker-compose build --build-arg PHP_VERSION=${{ matrix.php }} php
       - name: Install Composer dependencies
-        run: docker-compose run php update --prefer-dist --no-interaction --no-suggest --no-progress
+        run: docker-compose run php update --prefer-dist --no-interaction --no-progress
       - name: Run PHPUnit
         run: docker-compose run test
 #  code-check:
@@ -61,7 +61,7 @@ jobs:
 #      - name: Checkout code
 #        uses: actions/checkout@v2
 #      - name: Install Composer dependencies
-#        run: update --prefer-dist --no-interaction --no-suggest --no-progress
+#        run: update --prefer-dist --no-interaction --no-progress
 #      - name: Run PHP_CodeSniffer
 #        run: cs-check
 #      - name: Run PHPStan
