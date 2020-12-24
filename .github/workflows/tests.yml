@@ -46,7 +46,7 @@ jobs:
       - name: Install Composer dependencies
         run: docker-compose run php update --prefer-dist --no-interaction --no-progress
       - name: Run PHPUnit
-        run: docker-compose run test
+        run: docker-compose run php test
 #  code-check:
 #    name: Check coding standard
 #    runs-on: ubuntu-latest
