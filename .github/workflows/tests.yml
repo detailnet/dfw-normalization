@@ -1,0 +1,66 @@
+name: Tests
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths-ignore:
+      - build/**
+      - .gitattributes
+      - .gitignore
+      - docker-compose.yml
+      - LICENSE
+      - README.md
+  push:
+    branches:
+      - 'main'
+    paths-ignore:
+      - build/**
+      - .gitattributes
+      - .gitignore
+      - docker-compose.yml
+      - LICENSE
+      - README.md
+jobs:
+  test:
+    name: Test on PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    container:
+#      image: docker/php-:${{ matrix.php }}/Dockerfile
+      image: docker/php/Dockerfile
+      env:
+        PHP_VERSION: ${{ matrix.php }}
+      volumes:
+        - $GITHUB_WORKSPACE:/app
+        - $GITHUB_WORKSPACE/docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    strategy:
+      matrix:
+        php:
+          - 7.4
+          - 8.0
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Composer dependencies
+        run: update --prefer-dist --no-interaction --no-suggest --no-progress
+      - name: Run PHPUnit
+        run: test
+  code-check:
+    name: Check coding standard
+    runs-on: ubuntu-latest
+    container:
+      image: docker/php/Dockerfile
+      env:
+        PHP_VERSION: 7.4
+      volumes:
+        - $GITHUB_WORKSPACE:/app
+        - $GITHUB_WORKSPACE/docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Composer dependencies
+        run: update --prefer-dist --no-interaction --no-suggest --no-progress
+      - name: Run PHP_CodeSniffer
+        run: cs-check
+      - name: Run PHPStan
+        run: stan-check-ci

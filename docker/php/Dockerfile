@@ -1,4 +1,6 @@
-FROM php:7.4-cli
+#ENV PHP_VERSION 7.4
+ARG PHP_VERSION=7.4
+FROM php:${PHP_VERSION}-cli
 
 RUN echo "Europe/Zurich" > /etc/timezone; dpkg-reconfigure tzdata
 

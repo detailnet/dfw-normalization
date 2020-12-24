@@ -56,6 +56,7 @@
         "cs-check": "phpcs -s",
         "cs-fix": "phpcbf",
         "stan-check": "phpstan analyse",
+        "stan-check-ci": "phpstan analyse --no-progress",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --coverage-html build/coverage"
     }
